@@ -67,3 +67,26 @@ datosLineas <- readLines(con = f) # Lo ponemos para asociarlo con el fichero
 guess_encoding("empleados.Rmd")
 ```
 
+# Nos conectamos a la base de datos
+
+```{r}
+library("RMySQL")
+
+#Conexión
+mysqlconnection = dbConnect(RMySQL::MySQL(), dbname='employees', host='oceano.uv.es',
+port=3306, user='datamecum',password='ford')
+#Información
+dbGetInfo(mysqlconnection)
+# Tablas contenidas en la BBDD
+dbListTables(mysqlconnection)
+# Descarga de tablas --> data.frame
+salarios<-dbReadTable(mysqlconnection,name = 'salaries')
+empleados<-dbReadTable(mysqlconnection,name = 'employees')
+# Realizamos una consulta SQL en la BBDD (sin descargar)
+result = dbSendQuery(mysqlconnection, "select * from employees")
+# Descargamos los n (5) elementos resultantes de la consulta
+data.frame = dbFetch(result, n = 5)
+# Librera y finaliza la consulta
+dbClearResult(result)
+```
+
