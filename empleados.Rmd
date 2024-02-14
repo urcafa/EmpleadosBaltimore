@@ -57,5 +57,13 @@ guess_encoding(RutaFichero)
 # Leemos con la codificación adecuada
 
 f <- file(RutaFichero, encoding = "UTF-8")
+
+datosLineas <- readLines(con = f) # Lo ponemos para asociarlo con el fichero
+```
+
+# Miramos la codificación del fichero
+
+```{r}
+guess_encoding("empleados.Rmd")
 ```
 
