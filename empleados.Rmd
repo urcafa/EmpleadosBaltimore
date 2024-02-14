@@ -15,20 +15,24 @@ knitr::opts_chunk$set(echo = TRUE)
 rm(list = ls())
 ```
 
+# Ruta del fichero
+
+```{r}
+RutaFichero = "data/Baltimore_City_Employee_Salaries.csv"
+```
+
 
 # Importamos datos con Rbase
 
 ```{r}
-RutaFichero_rbase = "data/Baltimore_City_Employee_Salaries.csv"
-datos_rbase <- read.csv(file = RutaFichero_rbase)
+datos_rbase <- read.csv(file = RutaFichero)
 datos_rbase
 ```
 
 # Importamos datos con Readr
 
 ```{r}
-RutaFichero_readr = "data/Baltimore_City_Employee_Salaries.csv"
-datos_readr <- read_csv(RutaFichero_readr, col_types = cols(hireDate = 
+datos_readr <- read_csv(RutaFichero, col_types = cols(hireDate = 
                                               col_date(format = "%Y-%m-%d")))
 datos_readr
 ```
@@ -36,8 +40,22 @@ datos_readr
 # Importamos datos con librería RIO
 
 ```{r}
-RutaFichero_rio = "data/Baltimore_City_Employee_Salaries.csv"
-datos_rio <- import(RutaFichero_rio)
+library(rio)
+datos_rio <- import(RutaFichero)
 datos_rio
+```
+
+# Leemos el fichero línea a línea
+
+```{r}
+lineas_leidas <- readLines("data/Baltimore_City_Employee_Salaries.csv")
+
+# Revisamos la codificación del fichero
+
+guess_encoding(RutaFichero)
+
+# Leemos con la codificación adecuada
+
+f <- file(RutaFichero, encoding = "UTF-8")
 ```
 
